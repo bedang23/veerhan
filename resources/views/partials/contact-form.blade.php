@@ -9,7 +9,7 @@
         <div class="contact-detail-icon">📧</div>
         <div>
           <span>Email Us</span>
-          <a href="mailto:hello@veerhan.com">hello@veerhan.com</a>
+          <a href="mailto:contact@veerhanc.com">contact@veerhanc.com</a>
         </div>
       </div>
       <div class="contact-detail">

@@ -71,7 +71,7 @@
     @if($variant === 'home')
     <p style="font-size: 12px; color: rgba(255,255,255,0.25);">contact@veerhan.com · +91 87190 36405</p>
     @else
-    <p style="font-size: 12px; color: rgba(255,255,255,0.25);">hello@veerhan.com · +91 87190 36405</p>
+    <p style="font-size: 12px; color: rgba(255,255,255,0.25);">contact@veerhanc.com · +91 87190 36405</p>
     @endif
   </div>
 </footer>

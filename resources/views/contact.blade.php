@@ -42,7 +42,7 @@
   "url": "https://veerhan.com",
   "logo": "{{ asset('logo.png') }}",
   "description": "Full-service digital agency offering web design, web development, SEO, digital marketing, and web security for India, USA, and Dubai.",
-  "email": "hello@veerhan.com",
+  "email": "contact@veerhanc.com",
   "telephone": "+91-87190-36405",
   "address": {
     "@type": "PostalAddress",
@@ -708,8 +708,8 @@
       Tell us about your project and we'll get back to you within 24 hours with a free consultation and a no-obligation quote. No spam, no pressure — just a conversation.
     </p>
     <div class="quick-chips" id="quickChips">
-      <a href="mailto:hello@veerhan.com" class="quick-chip">
-        <span class="quick-chip-icon">📧</span> hello@veerhan.com
+      <a href="mailto:contact@veerhanc.com" class="quick-chip">
+        <span class="quick-chip-icon">📧</span> contact@veerhanc.com
       </a>
       <a href="tel:+918719036405" class="quick-chip">
         <span class="quick-chip-icon">📱</span> +91 87190 36405
@@ -739,7 +739,7 @@
             <div class="detail-icon">📧</div>
             <div class="detail-content">
               <div class="detail-label">Email</div>
-              <a href="mailto:hello@veerhan.com" class="detail-value">hello@veerhan.com</a>
+              <a href="mailto:contact@veerhanc.com" class="detail-value">contact@veerhanc.com</a>
               <div class="detail-note">We reply within 24 hours</div>
             </div>
           </div>
@@ -1064,7 +1064,7 @@
       <p class="location-detail">
         Our primary office and development team is based in Pune. We serve clients across all major Indian cities including Mumbai, Delhi, Bangalore, Hyderabad, and Chennai.<br><br>
         <a href="tel:+918719036405">+91 87190 36405</a><br>
-        <a href="mailto:hello@veerhan.com">hello@veerhan.com</a>
+        <a href="mailto:contact@veerhanc.com">contact@veerhanc.com</a>
       </p>
       <div class="location-hours">
         <span class="hours-dot"></span> Mon–Sat, 9 AM – 8 PM IST

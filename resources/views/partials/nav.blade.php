@@ -1,6 +1,6 @@
 <nav id="mainNav">
   <a href="/" class="nav-logo">
-    <span class="nav-logo-text">Veer<span>han</span></span>
+    <img src="{{ asset('logo.png') }}" alt="Veerhan Logo" class="nav-logo-img">
   </a>
   <ul class="nav-links">
     <li><a href="/" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a></li>
