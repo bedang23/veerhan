@@ -5,7 +5,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="nav-logo-text">Veer<span style="color:var(--orange)">han</span></div>
+      <div class="nav-logo-text"> <img src="{{ asset('logo.png') }}" alt="Veerhan Logo" class="nav-logo-img"> </div>
       @if($variant === 'home')
       <p>Built with Courage. Ranked with Purpose. Your complete digital partner for web design, SEO, marketing, and security — serving India and global markets.</p>
       <div class="footer-social" style="margin-top: 20px;">
