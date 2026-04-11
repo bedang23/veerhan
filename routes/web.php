@@ -1,13 +1,23 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\AuthorController as AdminAuthorController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\CaseStudyController as AdminCaseStudyController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Route;
 
+// Public routes
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
 Route::post('/contact/submit', [ContactController::class, 'store'])->name('contact.submit');
 
+// Services
 Route::prefix('services')->group(function () {
     Route::view('/web-design-development', 'web-development-service')->name('services.web-development');
     Route::view('/seo-digital-marketing', 'seo-service')->name('services.seo-digital');
@@ -18,11 +28,34 @@ Route::prefix('services')->group(function () {
     Route::view('/ai-implementation', 'ai-implementation-service')->name('services.ai');
 });
 
-// Admin Panel Routes
-Route::get('/admin/login', [AdminController::class, 'showLogin'])->name('login');
-Route::post('/admin/login', [AdminController::class, 'login']);
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('auth')->name('admin.dashboard');
-Route::post('/admin/logout', [AdminController::class, 'logout'])->name('logout');
-Route::get('/admin', function() {
-    return redirect()->route('admin.dashboard');
+// Blogs (public)
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');
+
+// Case Studies (public)
+Route::get('/case-studies', [CaseStudyController::class, 'index'])->name('case-studies.index');
+Route::get('/case-studies/{slug}', [CaseStudyController::class, 'show'])->name('case-studies.show');
+
+// Admin Panel
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    // Guest-only routes (login)
+    Route::middleware('admin.guest')->group(function () {
+        Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
+        Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
+    });
+
+    // Redirect /admin → dashboard
+    Route::get('/', fn () => redirect()->route('admin.dashboard'));
+
+    // Authenticated admin routes
+    Route::middleware('admin.auth')->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/contacts', [AdminContactController::class, 'index'])->name('contacts.index');
+        Route::resource('authors', AdminAuthorController::class)->except(['show']);
+        Route::resource('categories', AdminCategoryController::class)->except(['show']);
+        Route::resource('blogs', AdminBlogController::class)->except(['show']);
+        Route::resource('case-studies', AdminCaseStudyController::class)->except(['show']);
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+    });
 });

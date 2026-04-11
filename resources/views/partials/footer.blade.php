@@ -51,14 +51,14 @@
         @if($variant === 'home')
         <li><a href="#">About Veerhan</a></li>
         <li><a href="#">Our Work</a></li>
-        <li><a href="#">Blog & Insights</a></li>
+        <li><a href="{{ route('blogs.index') }}">Blog & Insights</a></li>
         <li><a href="#">Careers</a></li>
         <li><a href="#">Privacy Policy</a></li>
         <li><a href="#">Terms of Service</a></li>
         @else
         <li><a href="/about">About Veerhan</a></li>
         <li><a href="/work">Our Work</a></li>
-        <li><a href="/blog">Blog & Insights</a></li>
+        <li><a href="{{ route('blogs.index') }}">Blog & Insights</a></li>
         <li><a href="/careers">Careers</a></li>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
         <li><a href="/terms">Terms of Service</a></li>

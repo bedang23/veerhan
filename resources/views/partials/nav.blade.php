@@ -14,6 +14,8 @@
         <li><a href="{{ route('services.ai') }}">AI Implementation</a></li>
       </ul>
     </li>
+    <li><a href="{{ route('blogs.index') }}" class="{{ request()->routeIs('blogs.*') ? 'active' : '' }}">Blog</a></li>
+    <li><a href="{{ route('case-studies.index') }}" class="{{ request()->routeIs('case-studies.*') ? 'active' : '' }}">Case Studies</a></li>
     <li><a href="{{ route('contact') }}" class="nav-cta {{ request()->routeIs('contact') ? 'active' : '' }}">Contact Us →</a></li>
   </ul>
 
