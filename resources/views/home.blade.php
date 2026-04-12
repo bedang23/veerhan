@@ -535,6 +535,10 @@
     0%, 100% { opacity: 0.3; transform: scale(1); }
     50% { opacity: 0.7; transform: scale(1.05); }
   }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
   .ai-chips {
     position: absolute; bottom: 24px; left: 24px; right: 24px;
     display: flex; flex-wrap: wrap; gap: 8px;
@@ -1372,45 +1376,58 @@
         </p>
       </div>
     </div>
-    <div class="contact-form">
-      <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 28px;">Book a Free Consultation</h3>
-      <div class="form-grid">
-        <div class="form-row">
-          <label>Your Name</label>
-          <input type="text" placeholder="Raj Sharma">
+    <div class="contact-form" id="homeFormWrap">
+      <!-- SUCCESS STATE -->
+      <div id="homeFormSuccess" style="display:none; text-align:center; padding:40px 20px; animation: fadeInUp 0.5s ease;">
+        <div style="font-size:48px; margin-bottom:20px;">🎉</div>
+        <h3 style="font-family:var(--font-display); font-size:26px; font-weight:800; color:white; margin-bottom:12px;">Message Sent!</h3>
+        <p style="font-size:15px; color:rgba(255,255,255,0.6); line-height:1.7; max-width:340px; margin:0 auto;">Thank you for reaching out. We'll review your details and get back to you within 24 hours.</p>
+        <p style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.35);">Check your inbox for a follow-up from us.</p>
+      </div>
+
+      <!-- FORM -->
+      <form id="homeContactForm" style="display:block;">
+        @csrf
+        <input type="hidden" name="page_source" value="Home Page">
+        <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 28px;">Book a Free Consultation</h3>
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Your Name *</label>
+            <input type="text" name="first_name" placeholder="Raj Sharma" required>
+          </div>
+          <div class="form-row">
+            <label>Company / Website</label>
+            <input type="text" name="company" placeholder="yourwebsite.com">
+          </div>
         </div>
         <div class="form-row">
-          <label>Company / Website</label>
-          <input type="text" placeholder="yourwebsite.com">
+          <label>Email Address *</label>
+          <input type="email" name="email" placeholder="hello@yourcompany.com" required>
         </div>
-      </div>
-      <div class="form-row">
-        <label>Email Address</label>
-        <input type="email" placeholder="hello@yourcompany.com">
-      </div>
-      <div class="form-row">
-        <label>Phone / WhatsApp</label>
-        <input type="tel" placeholder="+1 or +91">
-      </div>
-      <div class="form-row">
-        <label>What do you need?</label>
-        <select>
-          <option value="">Select a service...</option>
-          <option>Web Design & Development</option>
-          <option>SEO Optimization</option>
-          <option>Digital Marketing</option>
-          <option>Web Security</option>
-          <option>E-Commerce Solution</option>
-          <option>Complete Digital Presence</option>
-          <option>Free SEO Audit</option>
-          <option>Other / Not Sure Yet</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label>Tell us about your project</label>
-        <textarea placeholder="Brief description of your goals, target audience, timeline..."></textarea>
-      </div>
-      <button class="btn-form">Send Message — It's Free →</button>
+        <div class="form-row">
+          <label>Phone / WhatsApp</label>
+          <input type="tel" name="phone" placeholder="+1 or +91">
+        </div>
+        <div class="form-row">
+          <label>What do you need?</label>
+          <select name="service">
+            <option value="">Select a service...</option>
+            <option>Web Design & Development</option>
+            <option>SEO Optimization</option>
+            <option>Digital Marketing</option>
+            <option>Web Security</option>
+            <option>E-Commerce Solution</option>
+            <option>Complete Digital Presence</option>
+            <option>Free SEO Audit</option>
+            <option>Other / Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Tell us about your project *</label>
+          <textarea name="message" placeholder="Brief description of your goals, target audience, timeline..." required></textarea>
+        </div>
+        <button type="submit" class="btn-form" id="homeSubmitBtn">Send Message — It's Free →</button>
+      </form>
     </div>
   </div>
 </section>
@@ -1545,6 +1562,45 @@
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
     document.querySelector('.hero-bg-glow').style.transform = `translateY(${y * 0.3}px)`;
+  });
+
+  // HOME CONTACT FORM
+  document.getElementById('homeContactForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('homeSubmitBtn');
+    const formEl = document.getElementById('homeContactForm');
+    const successEl = document.getElementById('homeFormSuccess');
+
+    const data = Object.fromEntries(new FormData(this).entries());
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+
+    fetch('{{ route('contact.submit') }}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(res => {
+      if (res.success) {
+        formEl.style.display = 'none';
+        successEl.style.display = 'block';
+      } else {
+        btn.textContent = 'Error — Try Again';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
+    })
+    .catch(() => {
+      btn.textContent = 'Error — Try Again';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    });
   });
 </script>
 @endsection

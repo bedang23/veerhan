@@ -18,6 +18,7 @@ class Contact extends Model
         'current_website',
         'timeline',
         'source',
+        'page_source',
         'message',
         'status',
         'ip_address',

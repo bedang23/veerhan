@@ -21,6 +21,7 @@ class ContactController extends Controller
             'current_website' => 'nullable|string|max:255',
             'timeline' => 'nullable|string|max:255',
             'source' => 'nullable|string|max:255',
+            'page_source' => 'nullable|string|max:255',
             'message' => 'required|string',
         ]);
 

@@ -43,6 +43,9 @@
                                 <td>
                                     <div style="color:var(--orange); font-weight:500;">{{ $contact->service ?: 'General' }}</div>
                                     <div style="font-size:12px; color:var(--muted); margin-top:3px;">{{ $contact->budget ?: 'N/A' }}</div>
+                                    @if($contact->page_source)
+                                    <div style="font-size:11px; color:rgba(255,255,255,0.35); margin-top:4px;">via {{ $contact->page_source }}</div>
+                                    @endif
                                 </td>
                                 <td style="max-width:280px;">
                                     <div style="font-size:13px; color:rgba(255,255,255,0.6); overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">{{ $contact->message }}</div>

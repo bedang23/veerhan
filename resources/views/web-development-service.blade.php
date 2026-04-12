@@ -1807,13 +1807,15 @@
   </div>
 </section>
 
+@include('partials.contact-form', ['serviceName' => 'Web Design & Development', 'pageSource' => 'Web Development Service Page', 'formId' => 'webdev'])
+
 <!-- CTA STRIP -->
 <div class="cta-strip" aria-label="Call to action">
   <div class="cta-strip-text">
     <h2>Ready to Build Your Next Website?</h2>
     <p>Get a free consultation and no-obligation quote in 24 hours.</p>
   </div>
-  <a href="{{ route('contact') }}#contact" class="btn-cta-white">Get Free Quote →</a>
+  <a href="#contact" class="btn-cta-white">Get Free Quote →</a>
 </div>
 
 @endsection
@@ -1831,113 +1833,154 @@
     document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
   });
 
-  // HERO ANIMATIONS
-  gsap.timeline({ delay: 0.2 })
-    .fromTo('#heroLabel', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
-    .fromTo('#heroTitle', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power4.out' }, '-=0.3')
-    .fromTo('#heroSub', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.4')
-    .fromTo('#heroActions', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.3')
-    .to('#heroStats', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.2')
-    .fromTo('#heroVisual', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, '-=0.6');
+  // HERO ANIMATIONS — cinematic entry
+  gsap.timeline({ delay: 0.15 })
+    .fromTo('#heroLabel',
+      { opacity: 0, y: 16, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' })
+    .fromTo('#heroTitle',
+      { opacity: 0, y: 80, skewY: 3 },
+      { opacity: 1, y: 0, skewY: 0, duration: 1.1, ease: 'power4.out' }, '-=0.4')
+    .fromTo('#heroSub',
+      { opacity: 0, y: 28 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.55')
+    .fromTo('#heroActions',
+      { opacity: 0, scale: 0.9, y: 22 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(1.5)' }, '-=0.4')
+    .to('#heroStats',
+      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.2')
+    .fromTo('#heroVisual',
+      { opacity: 0, scale: 0.86, x: 70, rotation: 5 },
+      { opacity: 1, scale: 1, x: 0, rotation: 0, duration: 1.3, ease: 'power3.out' }, '-=1.0');
+
+  // Hero background parallax on scroll
+  gsap.to('.service-hero-bg-grid', {
+    yPercent: 30, ease: 'none',
+    scrollTrigger: { trigger: '.service-hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
 
   // SCROLL ANIMATIONS
-  // Build cards
+  // Build cards — scale + tilt reveal
   gsap.utils.toArray('.build-card').forEach((card, i) => {
-    gsap.to(card, {
-      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-      delay: (i % 3) * 0.1,
-      scrollTrigger: { trigger: card, start: 'top 88%' }
-    });
+    gsap.fromTo(card,
+      { opacity: 0, scale: 0.82, y: 50, rotation: (i % 2 === 0 ? -4 : 4) },
+      { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 0.9, ease: 'back.out(1.5)',
+        delay: (i % 3) * 0.1,
+        scrollTrigger: { trigger: card, start: 'top 90%' }
+      }
+    );
   });
 
-  // Tech categories
+  // Tech categories — zoom + spin
   gsap.utils.toArray('.tech-category').forEach((cat, i) => {
-    gsap.to(cat, {
-      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-      delay: i * 0.1,
-      scrollTrigger: { trigger: '.tech-grid', start: 'top 80%' }
-    });
+    gsap.fromTo(cat,
+      { opacity: 0, scale: 0.72, rotation: (i % 2 === 0 ? -8 : 8) },
+      { opacity: 1, scale: 1, rotation: 0, duration: 0.75, ease: 'back.out(2)',
+        delay: i * 0.07,
+        scrollTrigger: { trigger: '.tech-grid', start: 'top 82%' }
+      }
+    );
   });
 
-  // Process steps
+  // Process steps — slide + scale sequential
   gsap.utils.toArray('.process-step').forEach((step, i) => {
-    gsap.to(step, {
-      opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
-      delay: i * 0.08,
-      scrollTrigger: { trigger: '.process-steps', start: 'top 80%' }
-    });
+    gsap.fromTo(step,
+      { opacity: 0, scale: 0.85, x: -40 },
+      { opacity: 1, scale: 1, x: 0, duration: 0.75, ease: 'power3.out',
+        delay: i * 0.11,
+        scrollTrigger: { trigger: '.process-steps', start: 'top 82%' }
+      }
+    );
   });
 
-  // AI section
-  gsap.to('#aiVisual', {
-    opacity: 1, x: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.ai-edge', start: 'top 75%' }
-  });
-  gsap.to('#aiText', {
-    opacity: 1, x: 0, duration: 1, delay: 0.2, ease: 'power3.out',
-    scrollTrigger: { trigger: '.ai-edge', start: 'top 75%' }
-  });
+  // AI section — angled dramatic entry
+  gsap.fromTo('#aiVisual',
+    { opacity: 0, scale: 0.85, x: -70, rotation: -5 },
+    { opacity: 1, scale: 1, x: 0, rotation: 0, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: '.ai-edge', start: 'top 78%' }
+    }
+  );
+  gsap.fromTo('#aiText',
+    { opacity: 0, scale: 0.9, x: 70, rotation: 3 },
+    { opacity: 1, scale: 1, x: 0, rotation: 0, duration: 1.1, ease: 'power3.out',
+      delay: 0.15,
+      scrollTrigger: { trigger: '.ai-edge', start: 'top 75%' }
+    }
+  );
 
-  // Portfolio cards
+  // Portfolio cards — scale + tilt stagger
   gsap.utils.toArray('.portfolio-card').forEach((card, i) => {
-    gsap.to(card, {
-      opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
-      delay: i * 0.08,
-      scrollTrigger: { trigger: '.portfolio', start: 'top 80%' }
-    });
+    gsap.fromTo(card,
+      { opacity: 0, scale: 0.85, y: 60, rotation: (i % 2 === 0 ? -3 : 3) },
+      { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 0.95, ease: 'power3.out',
+        delay: i * 0.07,
+        scrollTrigger: { trigger: '.portfolio', start: 'top 82%' }
+      }
+    );
   });
 
-  // Regions
+  // Region cards — spring zoom
   gsap.utils.toArray('.region-card').forEach((card, i) => {
-    gsap.to(card, {
-      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-      delay: i * 0.15,
-      scrollTrigger: { trigger: '.regions-grid', start: 'top 80%' }
-    });
+    gsap.fromTo(card,
+      { opacity: 0, scale: 0.7, rotation: (i % 2 === 0 ? -7 : 7) },
+      { opacity: 1, scale: 1, rotation: 0, duration: 0.95, ease: 'back.out(2)',
+        delay: i * 0.15,
+        scrollTrigger: { trigger: '.regions-grid', start: 'top 80%' }
+      }
+    );
   });
 
-  // Pricing
+  // Pricing cards — 3D flip reveal
   gsap.utils.toArray('.pricing-card').forEach((card, i) => {
-    gsap.to(card, {
-      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-      delay: i * 0.12,
-      scrollTrigger: { trigger: '.pricing-grid', start: 'top 80%' }
-    });
+    gsap.fromTo(card,
+      { opacity: 0, scale: 0.78, rotationX: 22, y: 70, transformPerspective: 900 },
+      { opacity: 1, scale: 1, rotationX: 0, y: 0, transformPerspective: 900,
+        duration: 1.05, ease: 'back.out(1.4)',
+        delay: i * 0.18,
+        scrollTrigger: { trigger: '.pricing-grid', start: 'top 80%' }
+      }
+    );
   });
 
-  // Why items
+  // Why items — scale + alternating tilt
   gsap.utils.toArray('.why-item').forEach((item, i) => {
-    gsap.to(item, {
-      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-      delay: i * 0.1,
-      scrollTrigger: { trigger: item, start: 'top 88%' }
-    });
+    gsap.fromTo(item,
+      { opacity: 0, scale: 0.85, y: 35, rotation: (i % 2 === 0 ? -3 : 3) },
+      { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 0.85, ease: 'back.out(1.5)',
+        delay: i * 0.1,
+        scrollTrigger: { trigger: item, start: 'top 88%' }
+      }
+    );
   });
 
-  // Testi cards
+  // Testimonials — float + rotate
   gsap.utils.toArray('.testi-card').forEach((card, i) => {
-    gsap.to(card, {
-      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-      delay: i * 0.12,
-      scrollTrigger: { trigger: card, start: 'top 88%' }
-    });
+    gsap.fromTo(card,
+      { opacity: 0, y: 55, scale: 0.88, rotation: (i % 2 === 0 ? -2.5 : 2.5) },
+      { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 0.95, ease: 'power3.out',
+        delay: i * 0.12,
+        scrollTrigger: { trigger: card, start: 'top 88%' }
+      }
+    );
   });
 
-  // FAQ items
+  // FAQ items — slide from left + scale
   gsap.utils.toArray('.faq-item').forEach((item, i) => {
-    gsap.to(item, {
-      opacity: 1, y: 0, duration: 0.5, ease: 'power3.out',
-      delay: i * 0.07,
-      scrollTrigger: { trigger: item, start: 'top 90%' }
-    });
+    gsap.fromTo(item,
+      { opacity: 0, x: -35, scale: 0.97 },
+      { opacity: 1, x: 0, scale: 1, duration: 0.6, ease: 'power3.out',
+        delay: i * 0.06,
+        scrollTrigger: { trigger: item, start: 'top 92%' }
+      }
+    );
   });
 
-  // Section titles
+  // Section titles — skew + scale cinematic reveal
   gsap.utils.toArray('.section-title').forEach(title => {
     gsap.fromTo(title,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
-        scrollTrigger: { trigger: title, start: 'top 88%' }
+      { opacity: 0, y: 55, skewY: 3, scale: 0.93 },
+      { opacity: 1, y: 0, skewY: 0, scale: 1, duration: 1.05, ease: 'power4.out',
+        scrollTrigger: { trigger: title, start: 'top 90%' }
       }
     );
   });
