@@ -82,6 +82,43 @@
     backdrop-filter: blur(16px);
     box-shadow: 0 1px 0 var(--border);
   }
+  
+  /* Dark hero nav override - white text on transparent nav */
+  nav:not(.scrolled) .nav-links a:not(.nav-cta) {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+  nav:not(.scrolled) .nav-links a:not(.nav-cta)::after {
+    background: white !important;
+  }
+  nav:not(.scrolled) .nav-cta {
+    background: white !important;
+    color: var(--black) !important;
+  }
+  nav:not(.scrolled) .nav-cta:hover {
+    background: var(--orange) !important;
+    color: white !important;
+  }
+  /* Dropdown stays readable on dark bg */
+  nav:not(.scrolled) .dropdown-menu {
+    background: #1a1a1a !important;
+    border-color: rgba(255,255,255,0.1) !important;
+  }
+  nav:not(.scrolled) .dropdown-menu li a {
+    color: rgba(255,255,255,0.8) !important;
+  }
+  nav:not(.scrolled) .dropdown-menu li a:hover {
+    background: rgba(244,107,27,0.15) !important;
+    color: var(--orange) !important;
+  }
+  /* Chevron */
+  nav:not(.scrolled) .chevron {
+    color: rgba(255,255,255,0.85);
+  }
+  /* Hamburger on dark bg */
+  nav:not(.scrolled) .nav-hamburger span {
+    background: white !important;
+  }
+  
   .nav-logo {
     display: flex; align-items: center; gap: 12px;
     text-decoration: none;
@@ -129,76 +166,84 @@
   /* HERO */
   .hero {
     min-height: 100vh;
-    display: flex; align-items: center;
+    display: flex; 
+    align-items: center;
     padding: 120px 48px 80px;
     position: relative;
     overflow: hidden;
-    background: var(--white);
+    background: #0A0A0A;
   }
-  .hero-bg-grid {
-    position: absolute; inset: 0;
-    background-image: 
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 64px 64px;
-    opacity: 0.4;
-  }
-  .hero-bg-glow {
+  
+  .hero-background {
     position: absolute;
-    top: -200px; right: -200px;
-    width: 800px; height: 800px;
-    background: radial-gradient(ellipse, rgba(244,107,27,0.12) 0%, transparent 70%);
-    pointer-events: none;
+    inset: 0;
+    z-index: 1;
   }
-  .hero-content { position: relative; z-index: 2; max-width: 900px; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--orange-pale);
-    border: 1px solid rgba(244,107,27,0.25);
-    border-radius: 100px;
-    padding: 6px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--orange-deep);
-    margin-bottom: 32px;
-    opacity: 0;
+  
+  .hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(1.3) contrast(1.1);
   }
-  .hero-badge .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--orange);
-    animation: pulse 2s infinite;
+  
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.2) 100%);
+    z-index: 2;
   }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.4); }
+  
+  .hero-container {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
   }
+  
+  .hero-content { 
+    max-width: 600px;
+  }
+  
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(52px, 8vw, 110px);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -3px;
-    color: var(--black);
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF;
     margin-bottom: 28px;
-    overflow: hidden;
   }
-  .hero-title .line { overflow: hidden; display: block; }
-  .hero-title .accent { color: var(--orange); }
+  
   .hero-tagline {
-    font-size: clamp(16px, 2vw, 20px);
-    font-weight: 300;
-    color: var(--gray);
-    line-height: 1.7;
-    max-width: 520px;
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(255,255,255,0.85);
     margin-bottom: 44px;
-    opacity: 0;
   }
+  
+  .hero-tagline .highlight {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-style: italic;
+  }
+  
   .hero-actions {
-    display: flex; align-items: center; gap: 20px;
+    display: flex; 
+    align-items: center; 
+    gap: 20px;
     flex-wrap: wrap;
-    opacity: 0;
   }
+  
   .btn-primary {
     background: var(--orange);
     color: white;
@@ -207,42 +252,53 @@
     font-size: 15px;
     font-weight: 500;
     text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; 
+    align-items: center; 
+    gap: 8px;
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
     box-shadow: 0 8px 32px rgba(244,107,27,0.3);
   }
+  
   .btn-primary:hover {
     background: var(--orange-deep);
     transform: translateY(-2px);
     box-shadow: 0 16px 40px rgba(244,107,27,0.4);
   }
-  .btn-secondary {
-    color: var(--black);
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    border-bottom: 1.5px solid var(--black);
-    padding-bottom: 2px;
-    transition: color 0.3s, border-color 0.3s;
+  
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .btn-secondary:hover { color: var(--orange); border-color: var(--orange); }
-  .hero-stats {
-    position: absolute;
-    bottom: 60px; right: 48px;
-    display: flex; gap: 40px;
-    opacity: 0;
+  
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 100px 24px 60px;
+    }
+    
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .hero-overlay {
+      background: linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.6) 100%);
+    }
+    
+    .hero-title {
+      font-size: 30px;
+    }
+    
+    .hero-tagline {
+      font-size: 16px;
+    }
+    
+    .hero-visual {
+      display: none;
+    }
   }
-  .stat-item { text-align: right; }
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 36px;
-    font-weight: 800;
-    color: var(--black);
-    line-height: 1;
-  }
-  .stat-num span { color: var(--orange); }
-  .stat-label { font-size: 13px; color: var(--gray); margin-top: 4px; }
 
   /* MARQUEE */
   .marquee-section {
@@ -881,13 +937,12 @@
     .contact-inner { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr 1fr; }
     .why-grid { grid-template-columns: 1fr; }
+    .hero-container { gap: 40px; }
   }
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
     .nav-links { display: none; }
     section { padding: 60px 24px; }
-    .hero { padding: 100px 24px 60px; }
-    .hero-stats { position: relative; bottom: auto; right: auto; margin-top: 40px; justify-content: flex-start; flex-wrap: wrap; gap: 24px; }
     .bento-card.span-5, .bento-card.span-4, .bento-card.span-3,
     .bento-card.span-7, .bento-card.span-8, .bento-card.span-6 { grid-column: span 12; }
     .footer-inner { grid-template-columns: 1fr; gap: 32px; }
@@ -901,39 +956,27 @@
 @section('content')
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-bg-grid"></div>
-  <div class="hero-bg-glow"></div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      Proudly built from India · Serving US & Global Clients
-    </div>
-    <h1 class="hero-title">
-      <span class="line">Built with</span>
-      <span class="line"><span class="accent">Courage.</span></span>
-      <span class="line">Ranked with</span>
-      <span class="line"><span class="accent">Purpose.</span></span>
-    </h1>
-    <p class="hero-tagline">
-      We design high-converting websites, dominate search rankings, and secure your complete digital presence — all powered by AI and delivered at extraordinary speed.
-    </p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Get Free Website Audit →</a>
-      <a href="#portfolio" class="btn-secondary">View Our Work ↗</a>
-    </div>
+  <div class="hero-background">
+    <picture>
+      <source media="(max-width: 768px)" srcset="{{ asset('images/hero-mobile.png') }}">
+      <img src="{{ asset('images/hero-desktop.png') }}" alt="Engineering Intelligence Design">
+    </picture>
   </div>
-  <div class="hero-stats" id="heroStats">
-    <div class="stat-item">
-      <div class="stat-num">200<span>+</span></div>
-      <div class="stat-label">Websites Delivered</div>
+  <div class="hero-overlay"></div>
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Engineering, Intelligence & Design Moving as One System
+      </h1>
+      <p class="hero-tagline">
+        Helping <span class="highlight">businesses</span> navigate scale, complexity, and evolving operational demands in the age of <span class="highlight">AI.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Connect with VEERHAN →</a>
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">98<span>%</span></div>
-      <div class="stat-label">Client Retention</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">4<span>×</span></div>
-      <div class="stat-label">Faster with AI</div>
+    <div class="hero-visual">
+      <!-- Visual content is handled by background image -->
     </div>
   </div>
 </section>
