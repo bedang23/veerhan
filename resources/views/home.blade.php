@@ -11,6 +11,10 @@
 <meta name="keywords" content="web design India, web development USA, SEO agency India, digital marketing, web security, veerhan">
 <meta property="og:title" content="Veerhan – Built with Courage. Ranked with Purpose.">
 <meta property="og:description" content="Premium web design, SEO & digital presence solutions for India and US businesses.">
+
+<!-- Preload hero images for faster LCP -->
+<link rel="preload" as="image" href="{{ asset('images/hero-desktop.webp') }}" media="(min-width: 769px)">
+<link rel="preload" as="image" href="{{ asset('images/hero-mobile.webp') }}" media="(max-width: 768px)">
 @endsection
 
 @section('head_libraries')
@@ -1000,8 +1004,8 @@
 <section class="hero" id="home">
   <div class="hero-background">
     <picture>
-      <source media="(max-width: 768px)" srcset="{{ asset('images/hero-mobile.png') }}">
-      <img src="{{ asset('images/hero-desktop.png') }}" alt="Engineering Intelligence Design">
+      <source media="(max-width: 768px)" srcset="{{ asset('images/hero-mobile.webp') }}">
+      <img src="{{ asset('images/hero-desktop.webp') }}" alt="Engineering Intelligence Design">
     </picture>
   </div>
   <div class="hero-overlay"></div>
